@@ -7,7 +7,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
 data_tmp = []
 
-def regiter_wallet():
+def register_wallet():
     if not os.path.exists('data.pickle'): 
         #pickle 파일이 존재하지 않는 경우 초기 가입도 안되어 있기 때문에 초기 가입 실행
         print("초기 비밀번호가 설정되어 있지 않습니다.")
