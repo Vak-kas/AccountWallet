@@ -1,0 +1,2 @@
+site_name: {input_name}, url: {input_url}, user_id: {input_user_id}, password: 13245
+
