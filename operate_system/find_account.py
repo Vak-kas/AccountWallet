@@ -54,7 +54,14 @@ def choose_find_order():
 
 
 
-
+def return_file_path(site_name, id_name):
+    file_path = os.path.join(directory, site_name, id_name); #파일 경로 설정
+    
+    if os.path.isfile(file_path):
+        return file_path;
+    
+    else:
+        return None;
 
 
 #계정들 싹 가져오기
@@ -74,7 +81,7 @@ def find_all_id(site):
             file_path = os.path.join(directory, dir_name);
             tmp_list = (os.listdir(file_path));
             id_list.append((dir_name, tmp_list)) #폴더명과 파일들을 하나의 튜플로 묶어서 id_list에 append 해주기
-        print(id_list)
+        # print(id_list)
         return id_list
             
             
@@ -174,10 +181,10 @@ def find_user_passward():
         if id_info == "0":
             break;
         id_name = id_info+".txt";
-        file_path = os.path.join(directory, site_name, id_name); #파일 경로 설정
+        file_path = return_file_path(site_name, id_name) #파일 경로 설정
 
         #파일 경로에 파일이 존재하는가?
-        if os.path.isfile(file_path):
+        if file_path:
             #파일 열기
             with open(file_path, "r") as f:
                 data = f.readlines(); #데이터 전부를 읽어들임.
