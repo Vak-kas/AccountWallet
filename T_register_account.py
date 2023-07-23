@@ -16,7 +16,7 @@ def register_wallet() :
             else:
                 break
         with open("data.txt", 'w') as f:
-            f.writelines(f"url: account_wallet, user_id: admin, password: {wallet_password}\n")
+            f.writelines(f"site_name: None, url: account_wallet, user_id: admin, password: {wallet_password}")
 
     with open('data.txt', 'r') as f:
         tmp = f.read()
@@ -31,9 +31,9 @@ def register_wallet() :
             else:
                 break
         with open("data.data", 'w') as f:
-            f.writelines(f'url: account_wallet, user_id: admin, password: {wallet_password}\n')
+            f.writelines(f'site_name: None, url: account_wallet, user_id: admin, password: {wallet_password}')
 
-def regiter():
+def register():
     with open('data.txt', 'r') as f:
         data_list = f.readlines()
         wallet_auth = ''
@@ -41,7 +41,6 @@ def regiter():
             if 'admin' in data:
                 datatmp = data.split("password: ")
                 wallet_auth = datatmp[1]
-                wallet_auth = wallet_auth.split("\n")[0]
 
     while True:
         print("계정 지갑 비밀번호를 입력하세요.")
@@ -51,6 +50,8 @@ def regiter():
             break
         else:
             print("비밀번호가 틀립니다.")
+            
+    os.chdir("account_directory")
 
     while True:
         print("계정 생성 페이지 입니다. 중지하시려면 X 를 입력하세요.")
@@ -64,5 +65,25 @@ def regiter():
         input_user_id = input()
         print("등록할 사이트의 비밀번호를 입력해주세요.")
         input_password = input()
-        with open("data.txt", 'a') as f:
-            f.writelines(f'site_name: {input_name}, url: {input_url}, user_id: {input_user_id}, password: {input_password}\n')
+        create_account(input_name, input_url, input_user_id, input_password)
+
+def create_account(site_name, site_url, site_id, site_password) :
+    if not os.path.exists(f'{site_name}'):
+        print("동일한 사이트의 계정이 없습니다.")
+        print("디렉토리를 생성합니다.")
+        os.mkdir(f'{site_name}')
+        os.chdir(f'{site_name}')
+        with open(f"{site_id}.txt", 'w') as f:
+            f.writelines(f'site_name: {site_name}, url: {site_url}, user_id: {site_id}, password: {site_password}')
+        os.chdir("../")
+    
+    else:
+        print("동일한 사이트의 디렉토리가 존재합니다.")
+        os.chdir(f'{site_name}')
+        with open(f"{site_id}.txt", 'w') as f:
+            f.writelines(f'site_name: {site_name}, url: {site_url}, user_id: {site_id}, password: {site_password}')
+        os.chdir("../")
+
+
+register_wallet()
+register()
