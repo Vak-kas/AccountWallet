@@ -4,7 +4,6 @@ import io
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
-data_tmp = []
 def register_wallet() :
     if not os.path.exists('data.txt'): 
         #pickle 파일이 존재하지 않는 경우 초기 가입도 안되어 있기 때문에 초기 가입 실행

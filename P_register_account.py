@@ -5,9 +5,8 @@ import io
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
 sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
-data_tmp = []
-
 def register_wallet():
+    data_tmp = []
     if not os.path.exists('data.pickle'): 
         #pickle 파일이 존재하지 않는 경우 초기 가입도 안되어 있기 때문에 초기 가입 실행
         print("초기 비밀번호가 설정되어 있지 않습니다.")
@@ -39,6 +38,7 @@ def register_wallet():
             pickle.dump(data_tmp, fw)
 
 def register():
+    data_tmp = []
     with open('data.pickle', 'rb') as fw:
         data_tmp = pickle.load(fw)
         
@@ -71,3 +71,6 @@ def register():
         data_tmp.append({'site_name': input_name, 'url': input_url, 'user_id': input_user_id, 'password': input_password})
         with open("data.pickle", 'wb') as fw:
             pickle.dump(data_tmp, fw)
+
+register_wallet()
+register()
