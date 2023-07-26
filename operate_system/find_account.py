@@ -3,6 +3,8 @@ import os
 import sys
 directory = "account_wallet"
 file_list = os.listdir(directory)
+# print(file_list)
+# choose_find_order()
 
 #menu에서 import 되어서 실행되는 함수
 def choose_find_order():
@@ -105,7 +107,7 @@ def find_all_id(site):
             tmp = input("모든 사이트에서 계정을 확인할까요?[Y/N]  >>  ");
             if tmp == "y" or tmp=="Y":
                 print("|ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ|");
-                find_all_id(None);
+                return find_all_id(None);
                 #모든 계정 싹다 들고오기
                 
                 
@@ -153,10 +155,26 @@ def find_passward_using_list(lst, id_info):
         file_path = os.path.join(directory, site_name, id_name); #파일 경로 설정
         with open(file_path, "r") as f:
                 data = f.readlines(); #데이터 전부를 읽어들임.
-                print(f"{id_info}[{data[2]}]의 비밀번호는")
-                print(f"{data[1][5:-1]}입니다.")
+                data = data[0].split(",");
+                passward = data[3].split(":")[1].strip();
+                print(f"{id_info}의 비밀번호는")
+                print(f"{passward}입니다.")
                 print("|ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ|");
                 #비밀번호 출력
+                
+def read_file_content(file_path):
+    with open(file_path, "r") as f:
+        data = f.readlines();
+        site_name, url, user_id, passward = data.split(",").strip();
+        site_name = site_name[10:];
+        url = url[5:];
+        user_id = user_id[9:];
+        passward = passward[10:];
+        
+        return (site_name, url, user_id, passward);
+        
+        # f.writelines(f'site_name: {input_name}, url: {input_url}, user_id: {input_user_id}, password: {input_password}\n')
+        
         
         
         
@@ -188,8 +206,10 @@ def find_user_passward():
             #파일 열기
             with open(file_path, "r") as f:
                 data = f.readlines(); #데이터 전부를 읽어들임.
-                print(f"{id_info}[{data[2]}]의 비밀번호는")
-                print(f"{data[1][5:-1]}입니다.")
+                data = data[0].split(",");
+                passward = data[3].split(":")[1].strip();
+                print(f"{id_info}의 비밀번호는")
+                print(f"{passward}입니다.")
                 print("|ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ|");
                 #비밀번호 출력
 
@@ -201,7 +221,9 @@ def find_user_passward():
             if choose_flag == "Y" or choose_flag == "y":
                 id_list = find_all_id(None);
                 filter_lst = filter_id_list(id_list, id_name)
-                print(filter_lst);
+                # print(filter_lst);
+                find_passward_using_list(filter_lst, None)
+                
 
             # 안 찾을 거니 메뉴화면으로 돌아감
             else:
@@ -223,3 +245,4 @@ def filter_id_list(id_list, id_name):
             
     
     
+# choose_find_order()
